@@ -1,0 +1,7 @@
+-r ./requirements-docs.txt
+-r ./requirements-tests.txt
+
+versioneer[toml]==0.28
+pre-commit==2.18.1
+towncrier==23.6.0
+nox==2022.1.7
