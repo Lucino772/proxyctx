@@ -2,8 +2,12 @@ import typing as t
 from contextvars import ContextVar
 from functools import wraps
 
-_PROXIED = [
+_PROXIED_ATTRIBUTES = [
     "__doc__",
+    "__class__",
+]
+
+_PROXIED = [
     "__repr__",
     "__str__",
     "__bytes__",
@@ -20,7 +24,6 @@ _PROXIED = [
     "__setattr__",
     "__delattr__",
     "__dir__",
-    "__class__",
     "__instancecheck__",
     "__subclasscheck__",
     "__call__",
@@ -105,50 +108,31 @@ def _identity(o: T) -> T:
     return o
 
 
-def _inject_self(__method: "t.Callable", __get_self: "t.Callable"):
-    @wraps(__method)
-    def _wrapper(_, *args, **kwargs):
-        return __method(__get_self(), *args, **kwargs)
+def _proxy_method(__name: str, __get_self: "t.Callable[[], T]"):
+    method_code = (
+        "def {name}(_, *args, **kwargs):"
+        "\n\treturn _get_self().{name}(*args, **kwargs)".format(name=__name)
+    )
 
-    return _wrapper
+    ns: t.Dict[str, t.Any] = {}
+    exec(method_code, {"_get_self": __get_self}, ns)
+    return ns[__name]
 
 
-def _proxy_cls(
-    __class: t.Type[T],
-    __get_self: "t.Callable[[], T]",
-    namespace: t.Union[dict, None] = None,
-) -> t.Type[T]:
-    class_name = "{}Proxy".format(__class.__name__)
-
-    ns = namespace if namespace else {}
-    for key in filter(lambda item: item in dir(__class), _PROXIED):
-        wrapped = getattr(__class, key)
-        if callable(wrapped):
-            ns[key] = _inject_self(wrapped, __get_self)
-        else:
-            ns[key] = wrapped
-
-    ns["__getattribute__"] = _inject_self(__class.__getattribute__, __get_self)
-    return type(class_name, tuple(), ns)
+@t.overload
+def proxy(__local: t.Union["ContextVar[T]", "t.Callable[[], T]"]) -> T:
+    ...
 
 
 @t.overload
 def proxy(
-    __class: t.Type[T], __local: t.Union["ContextVar[T]", "t.Callable[[], T]"]
+    __local: t.Union["ContextVar[K]", "t.Callable[[], K]"],
+    __getter: t.Callable[[K], T],
 ) -> T:
     ...
 
 
-@t.overload
-def proxy(
-    __class: t.Type[K],
-    __local: t.Union["ContextVar[T]", "t.Callable[[], T]"],
-    __getter: t.Callable[[T], K],
-) -> K:
-    ...
-
-
-def proxy(__class, __local, __getter=None):
+def proxy(__local, __getter=None):
     if __getter is None:
         __getter = _identity
 
@@ -165,9 +149,12 @@ def proxy(__class, __local, __getter=None):
 
         return __getter(obj)
 
-    cls = _proxy_cls(
-        __class,
-        _get_current_object,
-        {"__wrapped": __local, "__slots__": ("__wrapped")},
+    namespace = {"__wrapped": __local, "__slots__": ("__wrapped")}
+    for key in _PROXIED:
+        namespace[key] = _proxy_method(key, _get_current_object)
+
+    namespace["__getattribute__"] = _proxy_method(
+        "__getattribute__", _get_current_object
     )
+    cls = type("Proxy", tuple(), namespace)
     return cls()
