@@ -1,0 +1,48 @@
+[build-system]
+requires = [
+    "setuptools", "setuptools-scm", "versioneer[toml]"
+]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "proxyctx"
+authors = [
+    {name = "Lucino772", email = "lucapalmi772@gmail.com"},
+]
+description = "A Object proxy library inspired from Werkzeug's LocalProxy "
+readme = "README.md"
+requires-python = ">=3.8"
+license = {text = "MIT"}
+dynamic = ["version"]
+
+[tool.setuptools]
+packages = ["proxyctx"]
+
+[tool.setuptools.dynamic]
+version = {attr = "proxyctx.__version__"}
+
+[tool.versioneer]
+VCS = "git"
+style = "pep440"
+versionfile_source = "proxyctx/_version.py"
+versionfile_build = "proxyctx/_version.py"
+tag_prefix = "v"
+
+[tool.black]
+line-length = 79
+include = '\.pyi?$'
+exclude = '''
+/(
+    \.git
+  | \.mypy_cache
+  | \.venv
+  | docs
+)/
+'''
+
+[tool.towncrier]
+name = "proxyctx"
+directory = "changes"
+package = "proxyctx"
+filename = "CHANGELOG.rst"
+issue_format = "`#{issue} <https://github.com/Lucino772/proxyctx/issues/{issue}>`_"
