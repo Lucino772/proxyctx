@@ -1,0 +1,11 @@
+[run]
+branch = True
+source = proxyctx
+omit =
+    setup.py
+    proxyctx/_version.py
+    noxfile.py
+
+[report]
+omit =
+    tests/*
