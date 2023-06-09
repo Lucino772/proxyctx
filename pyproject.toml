@@ -46,3 +46,6 @@ directory = "changes"
 package = "proxyctx"
 filename = "CHANGELOG.rst"
 issue_format = "`#{issue} <https://github.com/Lucino772/proxyctx/issues/{issue}>`_"
+
+[tool.pytest.ini_options]
+addopts = "--doctest-modules --cov=./ --cov-report=xml ./tests"
