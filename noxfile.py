@@ -3,7 +3,7 @@ import os
 import nox
 
 
-@nox.session(python=["3.7", "3.8", "3.9"], venv_backend="venv")
+@nox.session(python=["3.7", "3.8", "3.9"])
 def tests(session: nox.Session):
     session.install("-r", "requirements/requirements-tests.txt")
     session.install(".")
