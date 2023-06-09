@@ -9,8 +9,8 @@
 **ProxyCTX** is a handy utility library that empowers developers to establish a global context accessible from anywhere within their application. Its creation was inspired by [Flask](https://flask.palletsprojects.com/en/latest/), a popular web framework. Under the hood, **ProxyCTX** leverages the Python standard module [contextvars](https://docs.python.org/3/library/contextvars.html).
 
 The library consists of just two key components:
-- `Proxy`: Inspired by Werkzeug's **LocalProxy** class ([werkzeug.local](https://github.com/pallets/werkzeug/blob/main/src/werkzeug/local.py)).
-- `Context`: Inspired by Flask's **AppContext** class ([flask.ctx](https://github.com/pallets/flask/blob/main/src/flask/ctx.py)).
+- `Proxy`: Inspired by Werkzeug's **LocalProxy** class ([werkzeug.local](https://github.com/pallets/werkzeug/blob/main/src/werkzeug/local.py))
+- `Context`: Inspired by Flask's **AppContext** class ([flask.ctx](https://github.com/pallets/flask/blob/main/src/flask/ctx.py))
 
 ## Flask Example
 
@@ -26,7 +26,7 @@ def index():
     print(request.method)
 ```
 
-It's worth noting that `request` is not the sole global variable available in Flask. You can explore the [flask.globals](https://github.com/pallets/flask/blob/main/src/flask/globals.py) module, which encompasses all the global variables provided by Flask.
+It's worth noting that `request` is not the only global variable available in Flask. You can explore the [flask.globals](https://github.com/pallets/flask/blob/main/src/flask/globals.py) module, which encompasses all the global variables provided by Flask.
 
 ## Usage
 

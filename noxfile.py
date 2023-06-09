@@ -1,5 +1,3 @@
-import os
-
 import nox
 
 
@@ -8,26 +6,6 @@ def tests(session: nox.Session):
     session.install("-r", "requirements/requirements-tests.txt")
     session.install(".")
     session.run("pytest")
-
-
-@nox.session
-def docs(session: nox.Session):
-    session.install("-r", "requirements/requirements-docs.txt")
-    session.install(".")
-
-    if "--serve" in session.posargs:
-        session.run(
-            "sphinx-autobuild",
-            "-b",
-            "dirhtml",
-            "docs/",
-            "docs/_build/html/",
-            "--open-browser",
-        )
-    else:
-        session.run(
-            "sphinx-build", "-b", "dirhtml", "docs/", "docs/_build/html/"
-        )
 
 
 @nox.session
@@ -40,15 +18,3 @@ def lint(session: nox.Session):
 def build(session: nox.Session):
     session.install("build")
     session.run("python", "-m", "build")
-
-
-@nox.session
-def upload(session: nox.Session):
-    session.install("twine")
-    upload_cmd = []
-    if os.path.exists(".env.deploy"):
-        session.install("python-dotenv[cli]")
-        upload_cmd = ["dotenv", "-f", ".env.deploy", "run", "--"]
-
-    upload_cmd.extend(["twine", "upload", "dist/*"])
-    session.run(*upload_cmd)

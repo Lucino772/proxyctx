@@ -9,11 +9,22 @@ name = "proxyctx"
 authors = [
     {name = "Lucino772", email = "lucapalmi772@gmail.com"},
 ]
-description = "A Object proxy library inspired from Werkzeug's LocalProxy "
+description = "ProxyCTX is a utility library for global context inspired by Flask, leveraging contextvars"
 readme = "README.md"
 requires-python = ">=3.7"
 license = {text = "MIT"}
 dynamic = ["version"]
+classifiers = [
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9"
+]
+
+[project.urls]
+Homepage = "https://github.com/Lucino772/proxyctx"
+Changelog = "https://github.com/Lucino772/proxyctx/blob/main/CHANGELOG.rst"
 
 [tool.setuptools]
 packages = ["proxyctx"]
