@@ -36,35 +36,34 @@ def augmented_op(operation: t.Callable[[t.Any, t.Any], t.Any]):
 
 
 class forward:
-    __slots__ = ("_name", "_bind_fn", "_class_value")
-    _bind_fn: t.Union[t.Callable[["Proxy", t.Any], t.Callable], None]
+    __slots__ = ("_name", "_func", "_class_value", "_bind_fn")
 
     def __init__(
         self,
         func: t.Union[t.Callable, None] = None,
         class_value: t.Any = None,
         bind_fn: t.Union[
-            t.Callable[["Proxy", t.Any], t.Callable], None
+            t.Callable[["Proxy", t.Any], t.Union[t.Callable, None]], None
         ] = None,
     ) -> None:
+        self._func = func
         self._class_value = class_value
         if self._class_value is None:
             self._class_value = self
+        self._bind_fn = bind_fn
 
-        if callable(bind_fn):
-            self._bind_fn = bind_fn
+    def bind_fn(
+        self, instance: "Proxy", obj: t.Any
+    ) -> t.Union[t.Callable, None]:
+        if callable(self._bind_fn):
+            return self._bind_fn(instance, obj)
+
+        if not callable(self._func):
+            return None
+        elif hasattr(self._func, "__get__"):
+            return self._func.__get__(obj, type(obj))
         else:
-            if callable(bind_fn):
-
-                def _bind_fn(instance: "Proxy", obj: t.Any) -> t.Callable:
-                    if hasattr(func, "__get__"):
-                        return func.__get__(obj, type(obj))
-                    else:
-                        return partial(func, obj)
-
-                self._bind_fn = _bind_fn
-            else:
-                self._bind_fn = None
+            return partial(self._func, obj)
 
     def __set_name__(self, owner: "Proxy", name: str):
         self._name = name
@@ -75,12 +74,13 @@ class forward:
         if instance is None:
             return self._class_value
 
-        print("GET", self._name)
         obj = instance._get_current_object()
-        if self._bind_fn is not None:
-            return self._bind_fn(instance, obj)
 
-        return getattr(obj, self._name)
+        ret = self.bind_fn(instance, obj)
+        if ret is None:
+            ret = getattr(obj, self._name)
+
+        return ret
 
     def __repr__(self) -> str:
         return f"<ProxyForward({self._name})>"
