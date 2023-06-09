@@ -1,4 +1,3 @@
--r ./requirements-docs.txt
 -r ./requirements-tests.txt
 
 versioneer[toml]==0.28
