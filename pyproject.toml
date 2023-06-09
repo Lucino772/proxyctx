@@ -56,6 +56,7 @@ name = "proxyctx"
 directory = "changes"
 package = "proxyctx"
 filename = "CHANGELOG.rst"
+title_format = "{name} v{version} ({project_date})"
 issue_format = "`#{issue} <https://github.com/Lucino772/proxyctx/issues/{issue}>`_"
 
 [tool.pytest.ini_options]
