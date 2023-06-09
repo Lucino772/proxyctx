@@ -1,5 +1,4 @@
 import setuptools
-
 import versioneer
 
 if __name__ == "__main__":
