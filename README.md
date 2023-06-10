@@ -1,4 +1,4 @@
-[![PyPI](https://img.shields.io/pypi/v/pymojang)](https://pypi.org/project/pymojang/)
+[![PyPI](https://img.shields.io/pypi/v/proxyctx)](https://pypi.org/project/pymojang/)
 [![CI](https://github.com/Lucino772/proxyctx/actions/workflows/ci.yml/badge.svg)](https://github.com/Lucino772/proxyctx/actions/workflows/ci.yml)
 [![pre-commit.ci status](https://results.pre-commit.ci/badge/github/Lucino772/proxyctx/main.svg)](https://results.pre-commit.ci/latest/github/Lucino772/proxyctx/main)
 [![codecov](https://codecov.io/gh/Lucino772/proxyctx/branch/main/graph/badge.svg?token=U4O9F1K0R4)](https://codecov.io/gh/Lucino772/proxyctx)
