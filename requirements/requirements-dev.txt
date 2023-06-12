@@ -3,4 +3,4 @@
 versioneer[toml]==0.28
 pre-commit==3.3.2
 towncrier==23.6.0
-nox==2022.1.7
+nox==2023.4.22
