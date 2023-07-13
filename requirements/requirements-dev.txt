@@ -1,6 +1,6 @@
 -r ./requirements-tests.txt
 
-versioneer[toml]==0.28
+versioneer[toml]==0.29
 pre-commit==3.3.3
 towncrier==23.6.0
 nox==2023.4.22
