@@ -285,12 +285,12 @@
         },
         "towncrier": {
             "hashes": [
-                "sha256:da552f29192b3c2b04d630133f194c98e9f14f0558669d427708e203fea4d0a5",
-                "sha256:fc29bd5ab4727c8dacfbe636f7fb5dc53b99805b62da1c96b214836159ff70c1"
+                "sha256:8754e96264b55beca526a8ee77a3cc7b2170cfb2411f53eb6ac42e183ac96a17",
+                "sha256:bc633438cb218e3c1fb502e8cd5d78fe7429276fa791ae36f6c8017fdbabb905"
             ],
             "index": "pypi",
-            "markers": "python_version >= '3.7'",
-            "version": "==23.6.0"
+            "markers": "python_version >= '3.8'",
+            "version": "==23.10.0"
         },
         "versioneer": {
             "extras": [
