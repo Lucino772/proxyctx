@@ -92,16 +92,14 @@ class Proxy(t.Generic[T, K]):
     _get_current_object: t.Callable[[], T]
 
     @t.overload
-    def __init__(self, __local: t.Union[ContextVar[T], t.Callable[[], T]]):
-        ...
+    def __init__(self, __local: t.Union[ContextVar[T], t.Callable[[], T]]): ...
 
     @t.overload
     def __init__(
         self,
         __local: t.Union[ContextVar[K], t.Callable[[], K]],
         __getter: t.Callable[[K], T],
-    ):
-        ...
+    ): ...
 
     def __init__(self, __local, __getter=_identity):
         def _get_current_object():
