@@ -2,5 +2,5 @@
 
 versioneer[toml]==0.29
 pre-commit==3.5.0
-towncrier==23.11.0
+towncrier==24.7.1
 nox==2024.4.15
