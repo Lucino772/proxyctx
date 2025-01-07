@@ -11,13 +11,12 @@ authors = [
 ]
 description = "ProxyCTX is a utility library for global context inspired by Flask, leveraging contextvars"
 readme = "README.md"
-requires-python = ">=3.7"
+requires-python = ">=3.8"
 license = {text = "MIT"}
 dynamic = ["version"]
 classifiers = [
     "License :: OSI Approved :: MIT License",
     "Operating System :: OS Independent",
-    "Programming Language :: Python :: 3.7",
     "Programming Language :: Python :: 3.8",
     "Programming Language :: Python :: 3.9"
 ]
